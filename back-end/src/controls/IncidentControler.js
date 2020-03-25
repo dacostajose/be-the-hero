@@ -36,13 +36,12 @@ module.exports = {
   },
   async delete(request, response) {
     const { id } = request.params;
-    const ong_id = request.headers.authorization;
-
+    let ong_id = request.headers.authorization;
     const incidents = await connection("incidents")
       .where("id", id)
       .select("ong_id")
       .first();
-
+    console.log(ong_id);
     if (incidents.ong_id !== ong_id) {
       return response.status(401).json({ error: "Operation not permited" });
     }
